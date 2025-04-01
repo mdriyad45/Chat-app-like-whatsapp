@@ -73,9 +73,16 @@ io.on("connection", (socket) => {
     )
 
     if(receiverId){
-        const privetMessage = {
-            
-        }
+        const privatMessage = {
+           id: Date.now(),
+           senderId,
+           receiverId,
+           text,
+           read: false,
+           type: "private" 
+        };
+        messages.push(privatMessage); //store private message
+        io.to(receiverId).emit("newPrivateMessage", privateMessage); //send to receiver
     }
   })
   socket.on("disconnect", () => {
